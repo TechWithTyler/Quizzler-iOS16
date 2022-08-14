@@ -28,15 +28,22 @@ struct QuizBrain {
 
 	var questionNumber = 0
 
-	func checkAnswer(_ userAnswer: String) -> Bool {
+	var score = 0
+
+	mutating func checkAnswer(_ userAnswer: String) -> Bool {
 		let actualQuestion = quiz[questionNumber]
 		let actualAnswer = actualQuestion.answer
 		let userGotItRight = userAnswer == actualAnswer
 		if userGotItRight {
+			score += 1
 			return true
 		} else {
 			return false
 		}
+	}
+
+	func getScore() -> Int {
+		return score
 	}
 
 	func getQuestionText() -> String {
@@ -49,11 +56,12 @@ struct QuizBrain {
 		return progress
 	}
 
-	func nextQuestion() {
+	mutating func nextQuestion() {
 		if questionNumber + 1 < quiz.count {
 			questionNumber += 1
 		} else {
 			questionNumber = 0
+			score = 0
 		}
 	}
 
